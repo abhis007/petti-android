@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 
-export default class LeaderBoard extends Component {
+export default class Profile extends Component {
     render() {
         return (
-            <View>
-                <Text>Leaderboard</Text>
-            </View>
+            <View><Text>
+                Profile
+            </Text></View>
         )
     }
 }

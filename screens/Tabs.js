@@ -1,79 +1,71 @@
 import 'react-native-gesture-handler';
-import React, { Component } from 'react'
-import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import React, {Component} from 'react';
+import {Text, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 
-import Home from './Home'
-import Areana from './Areana'
-import Leaderboard from './Leaderboard'
-import Rules from './Rules'
-import Profile from './Profile'
- 
+
+import Home from './Home';
+import Areana from './Arena';
+import Leaderboard from './LeaderBoard';
+import Rules from './Rules';
+import Profile from './Profile';
+
 const Tab = createMaterialBottomTabNavigator();
-export class Save extends Component {
-    render() {
-        return (
-   
-              
-   
+export class Tabs extends Component {
+  render() {
+    return (
       <Tab.Navigator
         activeColor="#f0edf6"
-  inactiveColor="#b71c1c"
-  barStyle={{ backgroundColor: '#F44336' }}
-  initialRouteName="Home"
-      >
-        <Tab.Screen name="Notifications" component={Notifications} 
-        options={{
-          tabBarLabel: 'Notifications',
-          scrollEnabled:true,
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="notifications" color={color} size={26} />
-          ),
-        }}
-        />
-        <Tab.Screen name="Search" component={Search} 
+        inactiveColor="#b71c1c"
+        barStyle={{backgroundColor: '#F44336'}}
+        initialRouteName="Home">
+        <Tab.Screen
+          name="Arena"
+          component={Areana}
           options={{
-          tabBarLabel: 'search',
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="search" color={color} size={26} />
-          ),
-        }}
+            tabBarLabel: 'Arena',
+            scrollEnabled: true,
+            tabBarIcon: ({color}) => (
+              <MaterialIcons name="notifications" color={color} size={26} />
+            ),
+          }}
         />
-        <Tab.Screen name="Home" component={Home} 
+        <Tab.Screen
+          name="Leaderboard"
+          component={Leaderboard}
           options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="home" color={color} size={26} />
-          ),
-        }}
-
+            tabBarLabel: 'Leaderboard',
+            tabBarIcon: ({color}) => (
+              <MaterialIcons name="search" color={color} size={26} />
+            ),
+          }}
         />
-        <Tab.Screen name="Coupons" component={Coupons} 
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
           options={{
-          tabBarLabel: 'My Coupons',
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="local-offer" color={color} size={26} />
-          ),
-        }}
+            tabBarLabel: 'Home',
+            tabBarIcon: ({color}) => (
+              <MaterialIcons name="home" color={color} size={26} />
+            ),
+          }}
         />
-        <Tab.Screen name="Inbox" component={Inbox} 
+        <Tab.Screen
+          name="Rules"
+          component={Rules}
           options={{
-          tabBarLabel: 'Inbox',
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="chat" color={color} size={26} />
-          ),
-        }}
-        />
+            tabBarLabel: 'Rules',
+            tabBarIcon: ({color}) => (
+              <MaterialIcons name="home" color={color} size={26} />
+            ),
+        }} />
       </Tab.Navigator>
-
-   
-           
-        )
-    }
+    )
+  }
 }
 
-export default Save
+export default Tabs;
