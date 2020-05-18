@@ -5,8 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {createStackNavigator} from '@react-navigation/stack';
-
-
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 import Home from './Home';
 import Areana from './Arena';
@@ -19,10 +18,20 @@ export class Tabs extends Component {
   render() {
     return (
       <Tab.Navigator
-        activeColor="#f0edf6"
-        inactiveColor="#b71c1c"
-        barStyle={{backgroundColor: '#F44336'}}
-        initialRouteName="Home">
+        activeColor="white"
+        inactiveColor="#b9e4c9"
+        barStyle={{backgroundColor: '#37966f'}}
+        initialRouteName="Arena">
+        <Tab.Screen
+          name="Rules"
+          component={Rules}
+          options={{
+            tabBarLabel: 'Rules',
+            tabBarIcon: ({color}) => (
+              <Icon name="question" color={color} size={26} />
+            ),
+          }}
+        />
         <Tab.Screen
           name="Arena"
           component={Areana}
@@ -30,7 +39,7 @@ export class Tabs extends Component {
             tabBarLabel: 'Arena',
             scrollEnabled: true,
             tabBarIcon: ({color}) => (
-              <MaterialIcons name="notifications" color={color} size={26} />
+              <Icon name="book" color={color} size={26} />
             ),
           }}
         />
@@ -40,21 +49,12 @@ export class Tabs extends Component {
           options={{
             tabBarLabel: 'Leaderboard',
             tabBarIcon: ({color}) => (
-              <MaterialIcons name="search" color={color} size={26} />
+              <Icon name="list-ol" color={color} size={26} />
             ),
           }}
         />
-        <Tab.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            tabBarLabel: 'Home',
-            tabBarIcon: ({color}) => (
-              <MaterialIcons name="home" color={color} size={26} />
-            ),
-          }}
-        />
-        <Tab.Screen
+        
+        {/* <Tab.Screen
           name="Rules"
           component={Rules}
           options={{
@@ -62,7 +62,7 @@ export class Tabs extends Component {
             tabBarIcon: ({color}) => (
               <MaterialIcons name="home" color={color} size={26} />
             ),
-        }} />
+        }} /> */}
       </Tab.Navigator>
     )
   }

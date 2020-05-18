@@ -39,7 +39,7 @@ export default function App() {
   return (
  
     <SafeAreaView style={styles.container}>
-    <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#E53935" translucent = {true}/>
+    <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#356859" translucent = {true}/>
     <NavigationContainer>
    
     <Stack.Navigator 
@@ -47,9 +47,9 @@ export default function App() {
       screenOptions={{
         
         headerTintColor: 'white',
-        headerStyle: { backgroundColor: '#F44336' },
+        headerStyle: { backgroundColor: '#37966f' },
       }}>
-      <Stack.Screen name="Shopwise" component={Tabs} />
+      <Stack.Screen name="Lost" component={Tabs} />
     </Stack.Navigator>
      
     
