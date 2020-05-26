@@ -1,60 +1,43 @@
 
 import 'react-native-gesture-handler';
-import * as React from 'react';
-import { StyleSheet,Text, View ,SafeAreaView } from 'react-native';
+import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'react-native'
+import { AsyncStorage } from 'react-native';
+import HomeTabs from './screens/HomeTabs'
+import Login from './screens/Login'
+const AuthStack = createStackNavigator();
+const HomeStack = createStackNavigator();
 
-import Tabs from './screens/Tabs'
-const Stack = createStackNavigator();
-
-
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
+const  AuthStackScreen=()=>{
+ return <AuthStack.Navigator screenOptions={{
+  headerShown: false
+}}>
+    <AuthStack.Screen name="Login" component={Login} />
+  </AuthStack.Navigator>
 }
 
-const Tab = createMaterialBottomTabNavigator();
+const HomeStackScreens =()=>{
+    return <HomeStack.Navigator    screenOptions={{
+      
+              headerTintColor: 'white',
+              headerStyle: { backgroundColor: '#37966f',elevation :0},
+        }}>
+        <HomeStack.Screen name="Home" component={HomeTabs} />
+     </HomeStack.Navigator>
+}
 
-export default function App() {
+
+const isLogined =1;
+
+function App() {
   return (
- 
-    <SafeAreaView style={styles.container}>
-    <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#356859" translucent = {true}/>
     <NavigationContainer>
-   
-    <Stack.Navigator 
-     
-      screenOptions={{
-        
-        headerTintColor: 'white',
-        headerStyle: { backgroundColor: '#37966f' },
-      }}>
-      <Stack.Screen name="Lost" component={Tabs} />
-    </Stack.Navigator>
-     
-    
-    
+       {(isLogined)?<HomeStackScreens/>:<AuthStackScreen/>}
     </NavigationContainer>
-    </SafeAreaView>
-  );
+  )
 }
+
+export default App
