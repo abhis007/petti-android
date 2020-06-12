@@ -1,28 +1,26 @@
 import React, { Component,useState } from 'react'
-import {FlatList,View, Alert} from 'react-native'
+import {FlatList,View, Alert,Dimensions} from 'react-native'
 import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
 import PopupComponent from './PopupComponent'
 
 
-
+const {width,height} = Dimensions.get('window')
 const ListComponent=({item,module}) =>{
 
   const [popupState,SetPopupState] = useState(false)
 
   const openPopup=(blnState)=>{
-   
     console.log(blnState)
     if(popupState==true)
     SetPopupState(false)
     else
     SetPopupState(true)
     
- 
   }
   
         return (
             
-            <Container  style={{backgroundColor:'#dce1e8',flex:1}}>
+            <Container  style={{backgroundColor:'#dce1e8',flex:1,height:height-200}}>
   
             <Content>
               <List  dataArray={item} 

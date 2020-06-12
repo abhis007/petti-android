@@ -1,41 +1,30 @@
-import React, { Component } from 'react';
-import { Text, View, Image,Dimensions ,Alert } from 'react-native';
+import React, { Component,useContext } from 'react';
+import { Text, View, Image,Dimensions ,Alert,Button } from 'react-native';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 const {width,height} = Dimensions.get('window')
 import { StatusBar } from 'react-native'
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
-
-export default class componentName extends Component {
-    createTwoButtonAlert = () =>
-    Alert.alert(
-      "Alert Title",
-      "My Alert Msg",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ],
-      { cancelable: false }
-    );
-
-    _setLoginState =async(token)=>{
-      await AsyncStorage.setItem('auth_token',token)
-      console.log(token)
-    }
-  render() {
+import {GlobalContext} from '../context/GlobalState'
+import Spinner from 'react-native-loading-spinner-overlay';
+export default Login =({ navigation })=> {
+ 
+  const {isSignedIn,loginFb}= useContext(GlobalContext)
+ 
+  
     return (
         <View style={{flex:1,backgroundColor:'#3b4045', alignItems: 'center'}}>
-         <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#3b4045" translucent = {true}/>
+          
+        <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#3b4045" translucent = {true}/>
+
         <Image
             source={require('../assets/logo.png')}
             style={{width:300,height:200,marginTop:height/3}}
             resizeMode="contain"
         />
-         <LoginButton
+
+
+        <LoginButton
           onLoginFinished={
             (error, result) => {
               if (error) {
@@ -44,18 +33,18 @@ export default class componentName extends Component {
                 console.log("login is cancelled.");
               } else {
                 AccessToken.getCurrentAccessToken().then(
-                  (data) => {
-                   this._setLoginState(data.accessToken.toString())
-                    console.log(data.accessToken.toString())
-                    console.log(data)
+                  (data) => {                
+                  loginFb(data.accessToken.toString())                                                  
+                    
                   }
                 )
               }
             }
           }
           onLogoutFinished={() => console.log("logout.")}/>
+         
 
         </View>
     );
-  }
+
 }

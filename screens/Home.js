@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'react-native'
 import { Text,Image, Dimensions,View,ScrollView ,FlatList,TouchableOpacity,StyleSheet,SafeAreaView} from 'react-native'
+import {GlobalContext} from '../context/GlobalState'
 
 
 const dummyData3 =

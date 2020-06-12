@@ -65,15 +65,13 @@ export default class Featured extends Component {
     
     render() {
         return (
-           
-             <Container  style={{backgroundColor:'#dce1e8',flex:1}}>
+            <Container  style={{backgroundColor:'#dce1e8',flex:1}}>
 
         <Content>
           <List>
             <ListComponent item={dummyData2} module='Join'/>
           </List>
         </Content>
-       
         
       </Container>
           
