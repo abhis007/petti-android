@@ -79,6 +79,7 @@ target 'lost' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+
   target 'lostTests' do
     inherit! :complete
     # Pods for testing

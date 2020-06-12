@@ -61,7 +61,7 @@ export default class Arena extends Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#dce1e8',
+      backgroundColor: '#1a1a1a',
     },
     formContent:{
       flexDirection: 'row',

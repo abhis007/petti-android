@@ -1,12 +1,11 @@
-import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import React from 'react'
 
-export default class LeaderBoard extends Component {
-    render() {
-        return (
-            <View>
-                <Text>Leaderboard</Text>
-            </View>
-        )
-    }
+function LeaderBoard() {
+    return (
+        <div>
+            
+        </div>
+    )
 }
+
+export default LeaderBoard
