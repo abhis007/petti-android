@@ -7,13 +7,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
 import HomeTabs from './screens/HomeTabs';
 import Login from './screens/Login';
-import CreateHunt from './screens/CreateHunt'
+import CreateHunt from './screens/CreateHunt';
 import {GlobalContext, GlobalProvider} from './context/GlobalState';
 import {View} from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 const AuthStack = createStackNavigator();
 const HomeStack = createStackNavigator();
-
+import {Container, Header, Content, Button, Icon, Text} from 'native-base';
 const AuthStackScreen = () => {
   return (
     <AuthStack.Navigator screenOptions={{}}>
@@ -23,6 +23,7 @@ const AuthStackScreen = () => {
 };
 
 const HomeStackScreens = () => {
+  const {authState, isSignedIn, restoreToken} = useContext(GlobalContext);
   return (
     <HomeStack.Navigator
       screenOptions={{
@@ -32,8 +33,46 @@ const HomeStackScreens = () => {
           elevation: 0,
         },
       }}>
-      <HomeStack.Screen name="Home" component={HomeTabs} />
-      <HomeStack.Screen name="CreateHunt"  component={CreateHunt}  options={{ title: 'Create Hunt' }}/>
+      <HomeStack.Screen
+        name="Home"
+        component={HomeTabs}
+        options={{
+          headerRight: () => (
+            <Button
+              bordered
+              rounded
+              small
+              danger
+              style={{marginRight: 10}}
+              onPress={() => {
+                logout();
+              }}>
+              <Text>logout</Text>
+            </Button>
+            
+            
+          ), headerLeft: () => (
+            <Button
+              bordered
+              rounded
+              small
+              danger
+              style={{marginRight: 10}}
+              onPress={() => {
+              console.log(authState);
+              }}>
+              <Text>ST</Text>
+            </Button>
+            
+            
+          ),
+        }}
+      />
+      <HomeStack.Screen
+        name="CreateHunt"
+        component={CreateHunt}
+        options={{title: 'Create Hunt'}}
+      />
     </HomeStack.Navigator>
   );
 };
@@ -45,12 +84,16 @@ function App() {
     const bootstrapAsync = async () => {
       let userToken;
       console.log('is Signedin :', isSignedIn);
+
       try {
         refreshToken = await AsyncStorage.getItem('refreshToken');
-       
+        alert(isSignedIn);
+
         if (refreshToken) {
           restoreToken();
-        }  
+        } else {
+          logout();
+        }
       } catch (e) {
         console.log('no tocken');
       }

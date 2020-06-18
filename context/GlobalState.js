@@ -19,9 +19,12 @@ export const GlobalProvider = ({children}) => {
   const [authState, dispatch] = useReducer(AppReducer, initialState);
 
   loginFb = async (fbToken) => {
+    alert(fbToken);
     dispatch({
       type: 'LOADING',
     });
+    alert(URLS_AUTH.login)
+    
     await fetch(URLS_AUTH.login + fbToken, {
       headers: {
         Accept: 'application/json',
@@ -30,7 +33,6 @@ export const GlobalProvider = ({children}) => {
     })
       .then((resp) => resp.json())
       .then(async function (data) {
-        console.log(data);
         await AsyncStorage.setItem('authToken', data.token);
         await AsyncStorage.setItem('refreshToken', data.refreshToken);
         await AsyncStorage.setItem('fbToken', fbToken);
@@ -54,18 +56,20 @@ export const GlobalProvider = ({children}) => {
     dispatch({
       type: 'LOADING',
     });
-   
+  
     refreshToken = await AsyncStorage.getItem('refreshToken');
     authToken = await AsyncStorage.getItem('authToken');
     fbToken = await AsyncStorage.getItem('fbToken');
-alert(authToken)
+ 
+console.log('sssssssssssssss'+authToken);
     if(!authToken){
-      AsyncStorage.clear();
+     
       dispatch({
         type: 'SIGN_OUT',
       });
     }
     else{
+      alert('asdasdasadasdasd')
     let tempStateData = {
       authToken: authToken,
       refreshToken: refreshToken,
@@ -89,7 +93,14 @@ alert(authToken)
       type: 'LOADING_END',
     });
   }
-  logout = async () => {};
+  logout = async () => {
+    alert('asdsd')
+    AsyncStorage.clear();
+    dispatch({
+      type: 'SIGN_OUT',
+    });
+
+  };
 
   return (
     <GlobalContext.Provider
@@ -99,6 +110,7 @@ alert(authToken)
         enableLoader,
         disableLoader,
         restoreToken,
+        logout,
         isSignedIn: authState.isSignedIn,
         isLoading: authState.isLoading,
         authToken:authState.authToken

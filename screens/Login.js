@@ -32,8 +32,10 @@ export default Login =({ navigation })=> {
               } else if (result.isCancelled) {
                 console.log("login is cancelled.");
               } else {
+                alert('astest23dasd');             
                 AccessToken.getCurrentAccessToken().then(
-                  (data) => {                
+                  (data) => {   
+                    alert('test');             
                   loginFb(data.accessToken.toString())                                                  
                     
                   }

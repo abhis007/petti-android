@@ -90,7 +90,7 @@ export default class Home extends Component {
         return (
             <View>
                  <View style={{paddingLeft:11,paddingTop:10}}>
-                        <Text style={{fontSize:18, fontWeight:'bold'}}>Featured Hunts</Text>
+                        <Text style={{fontSize:18, fontWeight:'bold'}}>Featured H uguygugunts</Text>
                     </View>   
             <ScrollView directionalLockEnabled ={true}>
                 
