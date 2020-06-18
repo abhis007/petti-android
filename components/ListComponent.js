@@ -9,12 +9,13 @@ const ListComponent=({item,module}) =>{
 
   const [popupState,SetPopupState] = useState(false)
 
+ 
   const openPopup=(blnState)=>{
     console.log(blnState)
     if(popupState==true)
-    SetPopupState(false)
+      SetPopupState(false)
     else
-    SetPopupState(true)
+      SetPopupState(true)
     
   }
   

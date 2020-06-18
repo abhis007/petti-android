@@ -87,7 +87,6 @@ function App() {
 
       try {
         refreshToken = await AsyncStorage.getItem('refreshToken');
-        alert(isSignedIn);
 
         if (refreshToken) {
           restoreToken();
@@ -95,7 +94,7 @@ function App() {
           logout();
         }
       } catch (e) {
-        console.log('no tocken');
+        console.log(e);
       }
     };
 

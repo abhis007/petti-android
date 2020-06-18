@@ -3,6 +3,7 @@ import AppReducer from './AppReducers';
 import AsyncStorage from '@react-native-community/async-storage';
 import {URLS_AUTH} from '../apiurls/Urls';
 import { enableScreens } from 'react-native-screens';
+import { LoginManager } from 'react-native-fbsdk'
 
 //Initial State
 
@@ -19,11 +20,11 @@ export const GlobalProvider = ({children}) => {
   const [authState, dispatch] = useReducer(AppReducer, initialState);
 
   loginFb = async (fbToken) => {
-    alert(fbToken);
+    
     dispatch({
       type: 'LOADING',
     });
-    alert(URLS_AUTH.login)
+ 
     
     await fetch(URLS_AUTH.login + fbToken, {
       headers: {
@@ -60,16 +61,13 @@ export const GlobalProvider = ({children}) => {
     refreshToken = await AsyncStorage.getItem('refreshToken');
     authToken = await AsyncStorage.getItem('authToken');
     fbToken = await AsyncStorage.getItem('fbToken');
- 
-console.log('sssssssssssssss'+authToken);
+
+    
     if(!authToken){
-     
-      dispatch({
-        type: 'SIGN_OUT',
-      });
+      logout();
     }
     else{
-      alert('asdasdasadasdasd')
+    
     let tempStateData = {
       authToken: authToken,
       refreshToken: refreshToken,
@@ -94,7 +92,7 @@ console.log('sssssssssssssss'+authToken);
     });
   }
   logout = async () => {
-    alert('asdsd')
+    LoginManager.logOut()
     AsyncStorage.clear();
     dispatch({
       type: 'SIGN_OUT',
@@ -115,7 +113,7 @@ console.log('sssssssssssssss'+authToken);
         isLoading: authState.isLoading,
         authToken:authState.authToken
       }}>
-     
+    
       {children}
     </GlobalContext.Provider>
   );

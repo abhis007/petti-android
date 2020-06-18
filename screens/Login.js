@@ -8,9 +8,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {GlobalContext} from '../context/GlobalState'
 import Spinner from 'react-native-loading-spinner-overlay';
 export default Login =({ navigation })=> {
- 
-  const {isSignedIn,loginFb}= useContext(GlobalContext)
- 
+
+    const {isSignedIn,loginFb}= useContext(GlobalContext)
   
     return (
         <View style={{flex:1,backgroundColor:'#3b4045', alignItems: 'center'}}>
@@ -32,10 +31,8 @@ export default Login =({ navigation })=> {
               } else if (result.isCancelled) {
                 console.log("login is cancelled.");
               } else {
-                alert('astest23dasd');             
                 AccessToken.getCurrentAccessToken().then(
                   (data) => {   
-                    alert('test');             
                   loginFb(data.accessToken.toString())                                                  
                     
                   }
@@ -44,8 +41,6 @@ export default Login =({ navigation })=> {
             }
           }
           onLogoutFinished={() => console.log("logout.")}/>
-         
-
         </View>
     );
 
