@@ -1,84 +1,60 @@
-import React, { Component } from 'react'
+import React, { Component,useContext, useState } from 'react'
 import { View,Modal,Dimensions,
     Image ,StyleSheet,TouchableOpacity,ScrollView} from 'react-native'
 import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
 import ListComponent from '../../components/ListComponent'
-
-const dummyData2 =
+import {GlobalContext} from '../../context/GlobalState'
+import {URLS_CONTEST} from '../../apiurls/Urls';
+import axios from 'axios';
+var  dummyData2 =
 [
     {
-        title:"Laptops",
+        name:"Laptops",
         url:'https://i.picsum.photos/id/62/100/100.jpg',
         description:'147 actionable tasks: 2 executed, 145 up-to-date',
-        key:31
+        id:31
     },
     {
-        title:"Fasion",
-        url:'https://i.picsum.photos/id/1059/400/300.jpg',
-        description:'Deprecated Gradle features were used in this build, making it incompatible with Gradle 7.0.',
-        key:32
-    },
-    {
-        title:"Titlte",
-        url:'https://i.picsum.photos/id/23/400/300.jpg',
-        description:'adsadasd',
-        key:33
-    },
-    {
-        title:"Laptops",
-        url:'https://i.picsum.photos/id/55/100/100.jpg',
-        description:'147 actionable tasks: 2 executed, 145 up-to-date',
-        key:312
-    },
-    {
-        title:"Laptops",
-        url:'https://i.picsum.photos/id/61/100/100.jpg',
-        description:'147 actionable tasks: 2 executed, 145 up-to-date',
-        key:11
-    },
-    {
-        title:"Laptops",
-        url:'https://i.picsum.photos/id/62/100/100.jpg',
-        description:'147 actionable tasks: 2 executed, 145 up-to-date',
-        key:112
-    },
+      name:"Laptops",
+      url:'https://i.picsum.photos/id/62/100/100.jpg',
+      description:'147 actionable tasks: 2 executed, 145 up-to-date',
+      id:31
+  },
+  {
+    name:"Laptops",
+    url:'https://i.picsum.photos/id/62/100/100.jpg',
+    description:'147 actionable tasks: 2 executed, 145 up-to-date',
+    id:31
+},
+    
 ]
-export default class Featured extends Component {
+var arrHuntList=[];
 
+//export default class Featured extends Component {
+export default function CreateHunt({route, navigation}) {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-          modalVisible:false
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //       modalVisible:false
         
-    }}
+    // }
 
-    clickEventListener = () => {
-        
-          this.setModalVisible(true);
-         
-      }
-    
-      setModalVisible(visible) {
-        this.setState({modalVisible: visible});
-      }
-    
+    const {authToken,enableLoader,disableLoader} = useContext(GlobalContext);
+    const [modalVisible,setModalVisible]=useState(false)
+ 
 
-     listHuntApiCall = async () => {
+    React.useEffect(() => {
+      const listHuntApiCall = async () => {
         enableLoader()
-     
-        await axios.get(URLS_CONTEST.create,{
-              name: huntName,
-              description:huntDescription,
-              status: 'INACTIVE',
-              type: huntType,
-            },
+        await axios.get(URLS_CONTEST.create,
             {headers: {Authorization: `Bearer ${authToken}`}},
           )
           .then(
             async (response) => {
-              console.log(authToken,'ggsdsdsdsd', response.data);
-            
+
+      
+              arrHuntList=response.data
               await disableLoader()
           
               setTimeout(function(){alert('Redirecting')}, 1000);
@@ -89,21 +65,33 @@ export default class Featured extends Component {
             },
           );
       };
+      
+      listHuntApiCall();
+    
+    }, []);
 
-    render() {
+    clickEventListener = () => {
+      setModalVisible(true)
+      
+      }
+    
+    
+    
+
+
         return (
             <Container  style={{backgroundColor:'#dce1e8',flex:1}}>
 
         <Content>
           <List>
-            <ListComponent item={dummyData2} module='Join'/>
+            <ListComponent item={arrHuntList} module='Join'/>
           </List>
         </Content>
         
       </Container>
           
         )
-    }
+    
 }
 
 
