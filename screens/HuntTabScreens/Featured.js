@@ -63,6 +63,33 @@ export default class Featured extends Component {
         this.setState({modalVisible: visible});
       }
     
+
+     listHuntApiCall = async () => {
+        enableLoader()
+     
+        await axios.get(URLS_CONTEST.create,{
+              name: huntName,
+              description:huntDescription,
+              status: 'INACTIVE',
+              type: huntType,
+            },
+            {headers: {Authorization: `Bearer ${authToken}`}},
+          )
+          .then(
+            async (response) => {
+              console.log(authToken,'ggsdsdsdsd', response.data);
+            
+              await disableLoader()
+          
+              setTimeout(function(){alert('Redirecting')}, 1000);
+            },
+            (error) => {
+              console.log(error);
+              disableLoader();
+            },
+          );
+      };
+
     render() {
         return (
             <Container  style={{backgroundColor:'#dce1e8',flex:1}}>

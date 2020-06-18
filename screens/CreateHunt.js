@@ -44,7 +44,7 @@ export default function CreateHunt({route, navigation}) {
       )
       .then(
         async (response) => {
-          console.log('gg', response.data);
+          console.log(authToken,'ggsdsdsdsd', response.data);
         
           await disableLoader()
          
