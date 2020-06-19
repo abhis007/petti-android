@@ -10,7 +10,6 @@ const dummyData ={
     const {width,height} = Dimensions.get('window')
 export default class Arena extends Component {
     render() {
-        console.log(dummyData);
         return (
             <View style={styles.container}>
            

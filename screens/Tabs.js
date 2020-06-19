@@ -12,6 +12,7 @@ import Areana from './Arena';
 import Leaderboard from './LeaderBoard';
 import Rules from './Rules';
 import Profile from './Profile';
+import AdminPanel from './AdminPanel';
 
 const Tab = createMaterialBottomTabNavigator();
 export class Tabs extends Component {
@@ -50,6 +51,16 @@ export class Tabs extends Component {
             tabBarLabel: 'Leaderboard',
             tabBarIcon: ({color}) => (
               <Icon name="list-ol" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="AdminPanel"
+          component={AdminPanel}
+          options={{
+            tabBarLabel: 'Admin Panel',
+            tabBarIcon: ({color}) => (
+              <Icon name="user" color={color} size={26} />
             ),
           }}
         />
