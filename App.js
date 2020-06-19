@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import * as React from 'react';
-import { StyleSheet,Text, View ,SafeAreaView } from 'react-native';
+import React, {useContext} from 'react';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -21,7 +21,6 @@ import Users from './screens/Users';
 
 const Stack = createStackNavigator();
 
-import {createStackNavigator} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
 import HomeTabs from './screens/HomeTabs';
 import Login from './screens/Login';
@@ -50,17 +49,18 @@ const HomeStackScreens = () => {
           elevation: 0,
         },
       }}>
+    
       <HomeStack.Screen name="Home" component={HomeTabs} />
       <HomeStack.Screen name="CreateHunt"  component={CreateHunt}  options={{ title: 'Create Hunt' }}/>
-      <Stack.Screen name="Home" component={Users} />
-      <Stack.Screen name="AdminPanel" component={AdminPanel} />
-      <Stack.Screen name="AnswerLog" component={AnswerLog} />
-      <Stack.Screen name="Arena" component={Arena} />
-      <Stack.Screen name="LeaderBoard" component={LeaderBoard} />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="Rules" component={Rules} />
-      <Stack.Screen name="Statistics" component={Statistics} />
-      <Stack.Screen name="UserDetailScreen" component={UserDetailScreen}/>
+      <HomeStack.Screen name="Users" component={Users} />
+      <HomeStack.Screen name="AdminPanel" component={AdminPanel} />
+      <HomeStack.Screen name="AnswerLog" component={AnswerLog} />
+      <HomeStack.Screen name="Arena" component={Arena} />
+      <HomeStack.Screen name="LeaderBoard" component={LeaderBoard} />
+      <HomeStack.Screen name="Profile" component={Profile} />
+      <HomeStack.Screen name="Rules" component={Rules} />
+      <HomeStack.Screen name="Statistics" component={Statistics} />
+      <HomeStack.Screen name="UserDetailScreen" component={UserDetailScreen}/>
     </HomeStack.Navigator>
   );
 };
