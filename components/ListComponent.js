@@ -7,14 +7,24 @@ import PopupComponent from './PopupComponent'
 const {width,height} = Dimensions.get('window')
 const ListComponent=({item,module}) =>{
 
-  const [popupState,SetPopupState] = useState(false)
+  const [popupState,setPopupState] = useState(false)
+  const[popupData,setPopupData]=useState('')
 
-  const openPopup=(blnState)=>{
-    console.log(blnState)
+ 
+  const openPopup=(data)=>{
+    
     if(popupState==true)
-    SetPopupState(false)
+      {
+        setPopupState(false)
+        setPopupData('')
+        
+      }
     else
-    SetPopupState(true)
+     { setPopupState(true)
+        
+      setPopupData(data)
+       
+    }
     
   }
   
@@ -32,8 +42,8 @@ const ListComponent=({item,module}) =>{
                     <Thumbnail square source={{ uri:data.url }} />
                   </Left>
                   <Body>
-                    <Text  style={{fontWeight:'bold',color:'#3b3b3b'}}>{data.title}</Text>
-                    <Text note numberOfLines={2} st>Its time to build a difference  adasjd jhdas hdujasd uadhuahd .</Text>
+                    <Text  style={{fontWeight:'bold',color:'#3b3b3b'}}>{data.name}</Text>
+                    <Text note numberOfLines={2} st>{data.description}</Text>
                     <Text note style={{fontWeight:'bold'}}>Cash Price:1000 Rs/-</Text>
                   </Body>
                   <Right>
@@ -49,7 +59,7 @@ const ListComponent=({item,module}) =>{
                         </Button>
                       : 
                     
-                      <Button backgroundColor='#26a69a' style={{borderRadius:50}}  onPress ={()=>openPopup(true)}>
+                      <Button backgroundColor='#26a69a' style={{borderRadius:50}}  onPress ={()=>openPopup(data)}>
                         <Text>Join</Text>
                         </Button>
                                                             
@@ -61,7 +71,7 @@ const ListComponent=({item,module}) =>{
                 
               </List>
             </Content>    
-            <PopupComponent blnShow={popupState} onChange={value=>openPopup(value)}  />
+            <PopupComponent blnShow={popupState}  data={popupData} onChange={value=>openPopup(popupData)}  />
           </Container>
         )
                           }

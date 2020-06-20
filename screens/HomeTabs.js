@@ -11,12 +11,18 @@ import Home from './Home';
 import Areana from './Arena';
 import Leaderboard from './LeaderBoard';
 import Rules from './Rules';
- 
+import {GlobalContext} from '../context/GlobalState'
+
 import Hunts from './HometabScreens/Hunts'
 import JoinedHunts from './HometabScreens/JoinedHunts'
 import CreatedHunts from './HometabScreens/CreatedHunt'
 import  Profile from './HometabScreens/Profile'
+
+
+
 const Tab = createMaterialBottomTabNavigator();
+ 
+
 export class HomeTabs extends Component {
   render() {
     return (

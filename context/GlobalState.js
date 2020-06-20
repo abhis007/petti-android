@@ -3,6 +3,7 @@ import AppReducer from './AppReducers';
 import AsyncStorage from '@react-native-community/async-storage';
 import {URLS_AUTH} from '../apiurls/Urls';
 import { enableScreens } from 'react-native-screens';
+import { LoginManager } from 'react-native-fbsdk'
 
 //Initial State
 
@@ -19,9 +20,12 @@ export const GlobalProvider = ({children}) => {
   const [authState, dispatch] = useReducer(AppReducer, initialState);
 
   loginFb = async (fbToken) => {
+    
     dispatch({
       type: 'LOADING',
     });
+ 
+    
     await fetch(URLS_AUTH.login + fbToken, {
       headers: {
         Accept: 'application/json',
@@ -30,7 +34,6 @@ export const GlobalProvider = ({children}) => {
     })
       .then((resp) => resp.json())
       .then(async function (data) {
-        console.log(data);
         await AsyncStorage.setItem('authToken', data.token);
         await AsyncStorage.setItem('refreshToken', data.refreshToken);
         await AsyncStorage.setItem('fbToken', fbToken);
@@ -54,18 +57,17 @@ export const GlobalProvider = ({children}) => {
     dispatch({
       type: 'LOADING',
     });
-   
+  
     refreshToken = await AsyncStorage.getItem('refreshToken');
     authToken = await AsyncStorage.getItem('authToken');
     fbToken = await AsyncStorage.getItem('fbToken');
-alert(authToken)
+
+    
     if(!authToken){
-      AsyncStorage.clear();
-      dispatch({
-        type: 'SIGN_OUT',
-      });
+      logout();
     }
     else{
+    
     let tempStateData = {
       authToken: authToken,
       refreshToken: refreshToken,
@@ -89,7 +91,14 @@ alert(authToken)
       type: 'LOADING_END',
     });
   }
-  logout = async () => {};
+  logout = async () => {
+    LoginManager.logOut()
+    AsyncStorage.clear();
+    dispatch({
+      type: 'SIGN_OUT',
+    });
+
+  };
 
   return (
     <GlobalContext.Provider
@@ -99,11 +108,12 @@ alert(authToken)
         enableLoader,
         disableLoader,
         restoreToken,
+        logout,
         isSignedIn: authState.isSignedIn,
         isLoading: authState.isLoading,
         authToken:authState.authToken
       }}>
-     
+    
       {children}
     </GlobalContext.Provider>
   );
