@@ -20,30 +20,37 @@ export const GlobalProvider = ({children}) => {
   const [authState, dispatch] = useReducer(AppReducer, initialState);
 
   loginFb = async (fbToken) => {
-    
+    alert('here');
+
+
     dispatch({
       type: 'LOADING',
     });
- 
-    
-    await fetch(URLS_AUTH.login + fbToken, {
+ const postData={
+
+  access_token:fbToken
+ }
+    alert(URLS_AUTH.login)
+    await fetch(URLS_AUTH.login , {
+      method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      body:JSON.stringify(postData)
     })
       .then((resp) => resp.json())
       .then(async function (data) {
+        console.log(data)
         await AsyncStorage.setItem('authToken', data.token);
-        await AsyncStorage.setItem('refreshToken', data.refreshToken);
+        await AsyncStorage.setItem('refreshToken', data.token);
         await AsyncStorage.setItem('fbToken', fbToken);
         let tempStateData = {
           authToken: data.token,
-          refreshToken: data.refreshToken,
+          refreshToken: data.token,
           fbToken: fbToken,
         };
-
-        dispatch({
+  dispatch({
           type: 'SIGN_IN',
           payload: tempStateData,
         });
@@ -57,7 +64,7 @@ export const GlobalProvider = ({children}) => {
     dispatch({
       type: 'LOADING',
     });
-  
+  alert('inside restore tocken')
     refreshToken = await AsyncStorage.getItem('refreshToken');
     authToken = await AsyncStorage.getItem('authToken');
     fbToken = await AsyncStorage.getItem('fbToken');

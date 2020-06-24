@@ -1,7 +1,7 @@
 import  {baseUrl} from '../config/config'
 
 const URLS_AUTH ={
-    'login':baseUrl+'/auth/facebook/access?accessToken=',
+    'login':baseUrl+'/user/oauth/facebook/',
     'logout':''
 
 }
@@ -12,6 +12,12 @@ const URLS_CONTEST={
     'delete':''
 
 }
-export   {URLS_AUTH,URLS_CONTEST} 
+
+
+const URLS_QUESTION ={
+    'create':baseUrl+'/questions/',
+    'mycontest':baseUrl+'/questions/myquestions'
+}
+export   {URLS_AUTH,URLS_CONTEST,URLS_QUESTION} 
 
  

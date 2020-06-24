@@ -17,12 +17,15 @@ import Profile from './screens/Profile';
 import Rules from './screens/Rules';
 import Statistics from './screens/Statistics';
 import UserDetailScreen from './screens/UserDetailScreen';
+import MessageResponse from './screens/MessageResponse';
+import CreateQuestion from './screens/CreateQuestion';
 import Users from './screens/Users';
 
 const Stack = createStackNavigator();
 
 import AsyncStorage from '@react-native-community/async-storage';
 import HomeTabs from './screens/HomeTabs';
+import PettiHome from './screens/PettiHome';
 import Login from './screens/Login';
 import CreateHunt from './screens/CreateHunt';
 import {GlobalContext, GlobalProvider} from './context/GlobalState';
@@ -33,7 +36,9 @@ const HomeStack = createStackNavigator();
 import {Container, Header, Content, Button, Icon, Text} from 'native-base';
 const AuthStackScreen = () => {
   return (
-    <AuthStack.Navigator screenOptions={{}}>
+    <AuthStack.Navigator screenOptions={{
+      headerShown: false
+    }}>
       <AuthStack.Screen name="Login" component={Login} />
     </AuthStack.Navigator>
   );
@@ -43,15 +48,52 @@ const HomeStackScreens = () => {
   const {authState, isSignedIn, restoreToken} = useContext(GlobalContext);
   return (
     <HomeStack.Navigator
-      screenOptions={{
-        headerTintColor: 'white',
-        headerStyle: {
-          backgroundColor: '#37966f',
-          elevation: 0,
-        },
-      }}>
-    
-      <HomeStack.Screen name="Home" component={HomeTabs} />
+    screenOptions={{
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: '#3b4045',
+        elevation: 0,
+      },
+    }}>
+ 
+    <HomeStack.Screen
+      name="Home"
+      component={PettiHome}
+       captions='Petti'
+      options={{
+        headerRight: () => (
+          <Button
+            bordered
+            rounded
+            small
+            danger
+            style={{marginRight: 10}}
+            onPress={() => {
+              logout();
+            }}>
+            <Text>logout</Text>
+          </Button>
+          
+          
+        ), headerLeft: () => (
+          <Button
+            bordered
+            rounded
+            small
+            danger
+            style={{marginRight: 10}}
+            onPress={() => {
+            console.log(authState);
+            }}>
+            <Text>ST</Text>
+          </Button>
+          
+          
+        ),
+      }}
+    />
+        <HomeStack.Screen name="MessageResponse" component={MessageResponse}/>
+        <HomeStack.Screen name="CreateQuestion" component={CreateQuestion}/>
       <HomeStack.Screen name="CreateHunt"  component={CreateHunt}  options={{ title: 'Create Hunt' }}/>
       <HomeStack.Screen name="Users" component={Users} />
       <HomeStack.Screen name="AdminPanel" component={AdminPanel} />
@@ -62,6 +104,7 @@ const HomeStackScreens = () => {
       <HomeStack.Screen name="Rules" component={Rules} />
       <HomeStack.Screen name="Statistics" component={Statistics} />
       <HomeStack.Screen name="UserDetailScreen" component={UserDetailScreen}/>
+     
     </HomeStack.Navigator>
   );
 };
@@ -74,14 +117,12 @@ function App() {
       let userToken;
       console.log('is Signedin :', isSignedIn);
 
-      try {
-        refreshToken = await AsyncStorage.getItem('refreshToken');
+      try { 
+        refreshToken = await AsyncStorage.getItem('authToken');
 
         if (refreshToken) {
           restoreToken();
-        } else {
-          logout();
-        }
+        } 
       } catch (e) {
         console.log(e);
       }

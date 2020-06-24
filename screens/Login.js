@@ -17,13 +17,14 @@ export default Login =({ navigation })=> {
         <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#3b4045" translucent = {true}/>
 
         <Image
-            source={require('../assets/logo.png')}
-            style={{width:300,height:200,marginTop:height/3}}
+            source={require('../assets/petti-logo.png')}
+            style={{width:300,height:500,marginTop:height/8}}
             resizeMode="contain"
         />
 
 
         <LoginButton
+         
           onLoginFinished={
             (error, result) => {
               if (error) {
@@ -32,8 +33,10 @@ export default Login =({ navigation })=> {
                 console.log("login is cancelled.");
               } else {
                 AccessToken.getCurrentAccessToken().then(
-                  (data) => {   
-                  loginFb(data.accessToken.toString())                                                  
+                  async (data) => {   
+                    console.log(data)
+                   
+                  await loginFb(data.accessToken.toString())                                                  
                     
                   }
                 )
