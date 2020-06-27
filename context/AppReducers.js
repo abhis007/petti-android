@@ -7,7 +7,7 @@ export default (state, action) => {
         refreshToken: action.payload.refreshToken,
         authToken: action.payload.authToken,
         fbToken:action.payload.fbToken,
-        isLoading:false
+        isLoading:false,
       };
     }
     case 'RESTORE_TOKENS':{
@@ -16,6 +16,22 @@ export default (state, action) => {
       }
 
     }
+
+    case'ENABLE_LIST_RELOAD':{
+        return{
+          ...state,
+          blnReloadList:true,
+
+        }
+    }
+
+    case'DISABLE_LIST_RELOAD':{
+      return{
+        ...state,
+        blnReloadList:false,
+
+      }
+  }
     case 'SIGN_OUT':{
       return {
         ...state,

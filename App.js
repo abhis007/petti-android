@@ -34,6 +34,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 const AuthStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 import {Container, Header, Content, Button, Icon, Text} from 'native-base';
+import { NotifierWrapper } from 'react-native-notifier';
 const AuthStackScreen = () => {
   return (
     <AuthStack.Navigator screenOptions={{
@@ -51,8 +52,8 @@ const HomeStackScreens = () => {
     screenOptions={{
       headerTintColor: 'white',
       headerStyle: {
-        backgroundColor: '#3b4045',
-        elevation: 0,
+        backgroundColor: '#ef5350',
+        
       },
     }}>
  
@@ -61,39 +62,40 @@ const HomeStackScreens = () => {
       component={PettiHome}
        captions='Petti'
       options={{
-        headerRight: () => (
-          <Button
-            bordered
-            rounded
-            small
-            danger
-            style={{marginRight: 10}}
-            onPress={() => {
-              logout();
-            }}>
-            <Text>logout</Text>
-          </Button>
+        title: 'Petti' ,
+        // headerRight: () => (
+        //   <Button
+        //     bordered
+        //     rounded
+        //     small
+            
+        //     style={{marginRight: 10}}
+        //     onPress={() => {
+        //       logout();
+        //     }}>
+        //     <Text>logout</Text>
+        //   </Button>
           
           
-        ), headerLeft: () => (
-          <Button
-            bordered
-            rounded
-            small
-            danger
-            style={{marginRight: 10}}
-            onPress={() => {
-            console.log(authState);
-            }}>
-            <Text>ST</Text>
-          </Button>
+        // ), headerLeft: () => (
+        //   <Button
+        //     bordered
+        //     rounded
+        //     small
+           
+        //     style={{marginRight: 10}}
+        //     onPress={() => {
+        //     console.log(authState);
+        //     }}>
+        //     <Text>ST</Text>
+        //   </Button>
           
           
-        ),
+        // ),
       }}
     />
-        <HomeStack.Screen name="MessageResponse" component={MessageResponse}/>
-        <HomeStack.Screen name="CreateQuestion" component={CreateQuestion}/>
+        <HomeStack.Screen name="MessageResponse" component={MessageResponse} options={{ title: 'Response' }}/>
+        <HomeStack.Screen name="CreateQuestion" component={CreateQuestion} options={{ title: 'Create' }}/>
       <HomeStack.Screen name="CreateHunt"  component={CreateHunt}  options={{ title: 'Create Hunt' }}/>
       <HomeStack.Screen name="Users" component={Users} />
       <HomeStack.Screen name="AdminPanel" component={AdminPanel} />
@@ -132,12 +134,12 @@ function App() {
   }, []);
 
   return (
-    <NavigationContainer>
-      {isSignedIn ? <HomeStackScreens /> : <AuthStackScreen />}
-  
-    
-    
-    </NavigationContainer>
+    <NotifierWrapper>
+     <StatusBar barStyle = "dark-content" hidden = {true} backgroundColor = "#ef5350" translucent = {true}/>
+        <NavigationContainer>
+          {isSignedIn ? <HomeStackScreens /> : <AuthStackScreen />}
+        </NavigationContainer>
+    </NotifierWrapper>
   );
 }
 

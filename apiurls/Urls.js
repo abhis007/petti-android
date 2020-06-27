@@ -18,6 +18,12 @@ const URLS_QUESTION ={
     'create':baseUrl+'/questions/',
     'mycontest':baseUrl+'/questions/myquestions'
 }
-export   {URLS_AUTH,URLS_CONTEST,URLS_QUESTION} 
+
+
+const URLS_USER ={
+    "username":baseUrl+'/user/',
+    'create':''
+}
+export   {URLS_AUTH,URLS_CONTEST,URLS_QUESTION,URLS_USER} 
 
  

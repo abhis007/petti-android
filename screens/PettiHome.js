@@ -1,4 +1,4 @@
-import React, {Component,useContext} from 'react';
+import React, {useState,useContext} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,114 +9,127 @@ import {
   Dimensions,
   Alert,
   ScrollView,
+ActivityIndicator
 } from 'react-native';
 import Moment from 'moment';
-import {Container, Header, Content, Badge} from 'native-base';
+ 
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {GlobalContext} from '../context/GlobalState'
 import {URLS_QUESTION} from '../apiurls/Urls';
 import axios from 'axios';
-//export default class Craigslist extends Component {
-    const data = [
-        {
-          id: 1,
-          name: 'Comunity',
-          image: '../assets/smiling_1.png',
-          count: 124.711,
-        },
-        {
-          id: 2,
-          name: 'Housing',
-          image: 'https://img.icons8.com/color/100/000000/real-estate.png',
-          count: 234.722,
-        },
-        {
-          id: 3,
-          name: 'Jobs',
-          image:
-            'https://img.icons8.com/color/100/000000/find-matching-job.png',
-          count: 324.723,
-        },
-        {
-          id: 4,
-          name: 'Personal',
-          image: 'https://img.icons8.com/clouds/100/000000/employee-card.png',
-          count: 154.573,
-        },
-        {
-          id: 5,
-          name: 'For sale',
-          image: 'https://img.icons8.com/color/100/000000/land-sales.png',
-          count: 124.678,
-        },
-      ]
-      const images =[require('../assets/question_1.png'),require('../assets/question_2.png'),require('../assets/question_2.png')]
+import { set } from 'react-native-reanimated';
+
+const images =[
+                require('../assets/question_2.png'),
+                require('../assets/question_2.png'),
+                require('../assets/question_2.png')
+              ]
   
-     var questions =[];
- 
+
+
+    
    export default function PettiHome({route, navigation}) {
 
+   
+ 
     Moment.locale();
-    const {authToken,enableLoader,disableLoader} = useContext(GlobalContext);
- 
- 
- 
-    React.useEffect(() => {
-      const listQuestionsApiCall = async () => {
-        enableLoader()
-        console.log(URLS_QUESTION.create)
-        await axios.get(URLS_QUESTION.mycontest,
-            {headers: {Authorization: `Bearer ${authToken}`}},
-          )
-          .then(
-            async (response) => {
-console.log(response.data)
-questions=await response.data;
-             // arrHuntList=response.data
-             // console.log(arrHuntList);
-              await disableLoader()
+    const {authToken,enableLoader,disableLoader,reLoadList,setListReload} = useContext(GlobalContext);
+    const [questions,setQuestions]=useState('')
+    const [page,setPage]=useState(0)
+    const [isFetching,setIsFetching]=useState(false)
+    const listQuestionsApiCall = async (currentPage) => {
+
+      enableLoader()
+   
+      await axios.get(URLS_QUESTION.mycontest+'?page='+currentPage,
+          {headers: {Authorization: `Bearer ${authToken}`}},
+        )
+        .then(
+          async (response) => {
           
-              setTimeout(function(){alert('Redirecting')}, 1000);
-            },
-            (error) => {
-              console.log(error);
-              disableLoader();
-            },
-          );
-      };
-      
-      listQuestionsApiCall();
+          var  qstn=await response.data;
+          if(currentPage==0){
+            if(qstn.length!=0)
+            setQuestions(qstn) 
+            setPage(0)
+          }
+        
+          else{
+            if(qstn.length!=0){
+                setQuestions(prevQuestions=>(prevQuestions.concat(qstn)))
+              }
+            else{
+              setPage(-1)
+            }
+          }
+          setIsFetching(false)
+          disableLoader()
+          },
+          (error) => {
+            console.log(error);
+            disableLoader();
+          },
+        );
+    };
+    React.useEffect(() => {
+      listQuestionsApiCall(0);
     
     }, []);
 
-
-  clickEventListener = (item) => {
-    Alert.alert('Message', 'Item clicked. ' + item.name);
-  };
-
+ 
+    if(reLoadList)
+        {
+          listQuestionsApiCall(0)
+          setListReload(false)
+        }
+ 
+  const loadMore= ()=>{
+   let currentPage =page;
+   if(currentPage!=-1)
+   { 
+      currentPage+=1
+      setPage(currentPage)
+      listQuestionsApiCall(currentPage);
+    }
   
+  }
+
+  function wait(timeout) {
+    return new Promise(resolve => {
+      setTimeout(resolve, timeout);
+    });
+  }
+ 
     let k = 1;
     return (
       <View style={styles.container}>
-        <View style={{backgroundColor: '#ef5350', height: 50, marginTop: -20}}>
+        <View style={{  backgroundColor: '#ff8a80',height:40, flexDirection: 'row', marginTop: -20}}>
+        <View style={{flex:8}}  >
           <Text
             style={{
               fontWeight: 'bold',
               color: '#ffffff',
               textAlign: 'center',
-              marginTop: 10,
-              fontSize: 15,
+              marginTop: 12,
+              fontSize: 12,
             }}>
             Showing all question asked by you
           </Text>
+          </View>
+       
         </View>
         <View style={{backgroundColor:'#e8eaf6',flex:1}}>
         <FlatList
           style={styles.contentList}
           columnWrapperStyle={styles.listContainer}
           data={questions}
+          onEndReached={()=>loadMore()}
+          onEndReachedThreshold={0.2}
+
+          onRefresh={() =>listQuestionsApiCall(0)}
+         refreshing={isFetching}
           keyExtractor={(item) => {
-            return item.id;
+            return item._id;
           }}
           renderItem={({item}) => {
            
@@ -162,7 +175,7 @@ questions=await response.data;
                             lineHeight: 19,
                           }}
                         />
-                        <Text style={{color: '#2a2a2a', fontWeight: 'bold',fontSize: 13}}> {Object.keys(item.comments).length}</Text>
+                        <Text style={{color: '#2a2a2a', fontWeight: 'bold',fontSize: 13}}> {(item.comments)?Object.keys(item.comments).length:0}</Text>
                       </View>
                       {/* <View style={{flex: 1, flexDirection: 'row'}}>
                         <Icon
