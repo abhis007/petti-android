@@ -5,7 +5,6 @@ import {View,StyleSheet,Text,Image,Dimensions} from 'react-native';
 const {width,height} = Dimensions.get('window')
 
 export default function ImageHolder(item) {
-    console.log(item.item.title)
     return (
        
         <View style ={styles.carView}>

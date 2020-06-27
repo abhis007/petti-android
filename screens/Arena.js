@@ -10,7 +10,6 @@ const dummyData ={
     const {width,height} = Dimensions.get('window')
 export default class Arena extends Component {
     render() {
-        console.log(dummyData);
         return (
             <View style={styles.container}>
            
@@ -61,7 +60,7 @@ export default class Arena extends Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#dce1e8',
+      backgroundColor: '#1a1a1a',
     },
     formContent:{
       flexDirection: 'row',
