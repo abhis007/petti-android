@@ -9,6 +9,7 @@ import {
   Dimensions,
   Alert,
   ScrollView,
+  
 } from 'react-native';
 import {Container, Header, Content, Badge} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -27,7 +28,6 @@ export default function MessageResponse({route, navigation}) {
   console.log('\nroute', route.params.data.comments);
 
   const shareQuestion = async () => {
-    console.log(route.params.data);
     await share(route.params.data);
   };
   const [dialogVisible, setDialogVisible] = useState();
@@ -35,6 +35,23 @@ export default function MessageResponse({route, navigation}) {
     setDialogVisible(true);
   };
 
+  const images =[
+    require('../assets/1x/avatar_1.png'),
+    require('../assets/1x/avatar_2.png'),
+    require('../assets/1x/avatar_3.png'),
+    require('../assets/1x/avatar_4.png'),
+    require('../assets/1x/avatar_5.png'),
+    require('../assets/1x/avatar_1.png'),
+  ]
+  const name =[
+    'Anonymus Ghost',
+    'The Devils Hand',
+    'Scary Pumpkin',
+    'The Witch',
+    'Evil Bat',
+    'Anonymus Ghost',
+
+,  ]
   const listEmptyComponent = () => {
     return (
       <View  style={{padding: 10}}>
@@ -102,7 +119,7 @@ export default function MessageResponse({route, navigation}) {
         }}
         negativeButton={{
           title: 'NO',
-          onPress: () => alert('No touched!'),
+          onPress: () =>  setDialogVisible(false),
         }}
       />
       <View
@@ -236,30 +253,16 @@ export default function MessageResponse({route, navigation}) {
             return (
               <TouchableOpacity
                 style={styles.card}
-                onPress={() => {
-                  clickEventListener(item);
-                }}>
-                {item.id == 1 ? (
+                >
+                 
                   <Image
                     style={styles.image}
-                    source={require('../assets/1x/avatar_3.png')}
+                    source={images[item.char_id]}
                     resizeMode="contain"
                   />
-                ) : item.id == 2 ? (
-                  <Image
-                    style={styles.image}
-                    source={require('../assets/1x/avatar_4.png')}
-                    resizeMode="contain"
-                  />
-                ) : (
-                  <Image
-                    style={styles.image}
-                    source={require('../assets/1x/avatar_1.png')}
-                    resizeMode="contain"
-                  />
-                )}
+              
                 <View style={styles.cardContent}>
-                  <Text style={{fontWeight: 'bold'}}>Anonymus Ghost</Text>
+                  <Text style={{fontWeight: 'bold'}}>{name[item.char_id]}</Text>
                   <Text style={styles.followButtonText}>
                     &nbsp;{item.comment}
                   </Text>

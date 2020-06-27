@@ -15,6 +15,7 @@ import {
   Toast,
   Spinner ,
   
+  
 } from 'native-base';
 import { Notifier, NotifierComponents } from 'react-native-notifier';
 import Share from "react-native-share";
@@ -24,6 +25,7 @@ import {URLS_QUESTION,URLS_USER} from '../apiurls/Urls';
 import axios from 'axios';
 import {GlobalContext,disableLoader} from '../context/GlobalState';
 import AsyncStorage from '@react-native-community/async-storage';
+import  {baseUrl,shareWebUrl} from '../config/config'
 export default function CreateQuestion({route, navigation}) {
   const [huntType, setHuntType] = useState('');
   const [huntName, setHuntName] = useState('');
@@ -40,7 +42,7 @@ export default function CreateQuestion({route, navigation}) {
     setHuntType(value);
   }
 
-  const {authToken,enableLoader,disableLoader,setListReload} = useContext(GlobalContext);
+  const {authToken,enableLoader,disableLoader,setListReload,share} = useContext(GlobalContext);
  
  const createQuestionApiCall = async () => {
     enableLoader()
@@ -85,28 +87,30 @@ Notifier.showNotification({
 
   
   const shareQuestion =async ()=>{
-  //  await axios.get(URLS_USER.username, {headers: {Authorization: `Bearer ${authToken}`}}).then((response)=>{
-  //    console.log(response.data)
-  //  }) 
-  const user = await AsyncStorage.getItem('user');
-    const title=user
-    console.log(user)
-    const url='www.petti.in/'+responseData._id
-    const message ="PETTI QUESTION \n\n"+ user +" wish to have your anonymus opinion on :\n"+responseData.question+"\n\nTo Share your opinion visit the link :\n"
-    const options={
-      title:title,
-      subject:'Whats you like most in me',
-      message: `${message} ${url}`,
-    }
-    Share.open(options)
-    .then((res) => { console.log(res) })
-    .catch((err) => { err && console.log(err); });
+  await share(responseData);
   }
 
   const reset =()=>{
    
     setResponseData('')
     SetSharemode(false)
+  }
+
+  const copyUrl =  () => {
+    const url =shareWebUrl+ responseData._id
+
+    Clipboard.setString(url)
+    Notifier.showNotification({
+      title: 'Copied',
+      description: 'Question link Copied Sucessffully ',
+      Component: NotifierComponents.Alert,
+      duration:3000,
+      componentProps: {
+        alertType: 'info',
+         
+      },
+    });
+
   }
 
   return (
@@ -238,14 +242,14 @@ Notifier.showNotification({
             <Icon active name='swap' />
           </Item> */}
           <Text style={{fontSize:15,color:'white'}} numberOfLines={1}>
-            {'https://www.petti.com/questions/'+responseData._id}</Text>
+            {shareWebUrl+responseData._id}</Text>
           </View>
           <View style={{flexDirection: 'row'}}>
               <View style={{flex:1,padding:10}}>
                   <Button rounded  block  bordered small   onPress={() => shareQuestion()}  ><Text style={{textAlign:'center',color:"white"}}>  Share</Text></Button>
               </View>
               <View style={{flex:1,padding:10}}>
-                  <Button rounded  block danger bordered small  ><Text style={{textAlign:'center',color:"white"}}>Copy </Text></Button>
+                  <Button rounded  block danger bordered small onPress={() =>copyUrl()}><Text style={{textAlign:'center',color:"white"}}>Copy </Text></Button>
               </View>
               <View style={{flex:1,padding:10}}>
                   <Button rounded  block success bordered small  onPress={() =>reset()}><Text style={{textAlign:'center',color:"white"}}>New</Text></Button>

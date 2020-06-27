@@ -24,10 +24,29 @@ const images =[
                 require('../assets/question_2.png'),
                 require('../assets/question_2.png')
               ]
-  
+              const listEmptyComponent = () => {
+                return (
+                  <View  style={{padding: 10}}>
+                    <View style={{flex: 1,alignItems: 'center',marginTop: 30,backgroundColor:'white',padding: 20,borderRadius:50,shadowColor: 'blue',
+                      shadowOffset: {
+                        width: 1,
+                        height: 1,
+                      },
+                      shadowOpacity: 0.8,
+                      shadowRadius:0,
+                      elevation: 5,}}>
+                     <Image
+                                style={{height:180,width:500}}
+                                source={require('../assets/no-questions.png')}
+                                resizeMode="contain"
+                              />
+                        <Text style={{fontSize:12,fontWeight: 'bold'}}>You havent asked anything</Text>
+                    </View>
+                    </View>
+                )
+            }
 
-
-    
+ 
    export default function PettiHome({route, navigation}) {
 
    
@@ -50,7 +69,9 @@ const images =[
           var  qstn=await response.data;
           if(currentPage==0){
             if(qstn.length!=0)
-            setQuestions(qstn) 
+            setQuestions(qstn)
+            else 
+            setQuestions('')
             setPage(0)
           }
         
@@ -125,7 +146,7 @@ const images =[
           data={questions}
           onEndReached={()=>loadMore()}
           onEndReachedThreshold={0.2}
-
+ ListEmptyComponent={listEmptyComponent}
           onRefresh={() =>listQuestionsApiCall(0)}
          refreshing={isFetching}
           keyExtractor={(item) => {

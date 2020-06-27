@@ -5,6 +5,7 @@ import {URLS_AUTH} from '../apiurls/Urls';
 import { enableScreens } from 'react-native-screens';
 import { LoginManager } from 'react-native-fbsdk'
 import Share from "react-native-share"
+import  {baseUrl,shareWebUrl} from '../config/config'
 //Initial State
 
 const initialState = {
@@ -21,7 +22,7 @@ export const GlobalProvider = ({children}) => {
   const [authState, dispatch] = useReducer(AppReducer, initialState);
 
   loginFb = async (fbToken) => {
-    alert('here');
+   
 
 
     dispatch({
@@ -31,7 +32,8 @@ export const GlobalProvider = ({children}) => {
 
   access_token:fbToken
  }
-    alert(URLS_AUTH.login)
+ console.log('toke',postData)
+ alert(URLS_AUTH.login)
     await fetch(URLS_AUTH.login , {
       method: 'POST',
       headers: {
@@ -127,7 +129,7 @@ export const GlobalProvider = ({children}) => {
     const user = await AsyncStorage.getItem('user');
     const title=user
   
-    const url='https://petti-web.herokuapp.com/Respond/'+arrQuestionDetails._id
+    const url=shareWebUrl+arrQuestionDetails._id
     const message ="PETTI QUESTION \n\n"+user +" wish to have your anonymus opinion on :\n"+arrQuestionDetails.question+"\n\nTo Share your opinion visit the link :\n"
     const options={
       title:title,
