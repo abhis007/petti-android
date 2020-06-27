@@ -308,27 +308,7 @@ export default function MessageResponse({route, navigation}) {
           }}
         />
       </View>
-      <TouchableOpacity
-        activeOpacity={0.5}
-        onPress={() => {
-          navigation.navigate('CreateHunt');
-        }}
-        style={styles.TouchableOpacityStyle}>
-        <Icon
-          name="plus-circle"
-          style={{
-            fontSize: 60,
-            color: '#2a2a2a',
-          }}
-        />
-        {/* <Image
-          source={{
-            uri:
-              'https://reactnativecode.com/wp-content/uploads/2017/11/Floating_Button.png',
-          }}
-          style={styles.FloatingButtonStyle}
-        /> */}
-      </TouchableOpacity>
+    
     </View>
   );
 }
