@@ -11,6 +11,13 @@ import {
   ScrollView,
 ActivityIndicator
 } from 'react-native';
+import { 
+  AdMobBanner, 
+  AdMobInterstitial, 
+  PublisherBanner,
+  AdMobRewarded
+} from 'react-native-admob'
+ 
 import Moment from 'moment';
  
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -40,7 +47,7 @@ const images =[
                                 source={require('../assets/no-questions.png')}
                                 resizeMode="contain"
                               />
-                        <Text style={{fontSize:12,fontWeight: 'bold'}}>You havent asked anything</Text>
+                        <Text style={{fontSize:12,fontWeight: 'bold'}}>No petti created yet</Text>
                     </View>
                     </View>
                 )
@@ -50,6 +57,8 @@ const images =[
    export default function PettiHome({route, navigation}) {
 
    
+
+ 
  //test
     Moment.locale();
     const {authToken,enableLoader,disableLoader,reLoadList,setListReload} = useContext(GlobalContext);
@@ -105,6 +114,7 @@ const images =[
         }
  
   const loadMore= ()=>{
+ 
    let currentPage =page;
    if(currentPage!=-1)
    { 
@@ -134,11 +144,22 @@ const images =[
               marginTop: 12,
               fontSize: 12,
             }}>
-            Showing all question asked by you
+            Showing all your petti
           </Text>
           </View>
        
         </View>
+        <View style={{marginRight:10}}>
+        <AdMobBanner
+  adSize="fullBanner"
+  adUnitID="ca-app-pub-8661978230190789/4837808492"
+  onAdFailedToLoad={error => console.error(error)}
+/>
+
+
+
+        </View>
+
         <View style={{backgroundColor:'#e8eaf6',flex:1}}>
         <FlatList
           style={styles.contentList}

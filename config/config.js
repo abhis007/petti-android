@@ -1,8 +1,8 @@
 const env='DEV'// DEV||PROD
 
-const shareWebUrl='https://petti-web.herokuapp.com/Respond/'
-const baseUrlProd='https://petti.herokuapp.com'
-const baseUrldev='https://petti.herokuapp.com'
+const shareWebUrl='http://www.petti.in/respond/'
+const baseUrlProd='http://ec2-3-16-31-122.us-east-2.compute.amazonaws.com:3000'
+const baseUrldev='http://ec2-3-16-31-122.us-east-2.compute.amazonaws.com:3000'
 
 const baseUrl=(env=='PROD')?baseUrlProd:baseUrldev
 export {

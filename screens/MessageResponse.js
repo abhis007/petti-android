@@ -1,25 +1,29 @@
-import React, {useState, useContext} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  Dimensions,
-  Alert,
-  ScrollView,
-  
-} from 'react-native';
-import {Container, Header, Content, Badge} from 'native-base';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Moment from 'moment';
-import {GlobalContext} from '../context/GlobalState';
-//export default class Craigslist extends Component {
-import {ConfirmDialog} from 'react-native-simple-dialogs';
-import {Notifier, NotifierComponents} from 'react-native-notifier';
-import {URLS_QUESTION, URLS_USER} from '../apiurls/Urls';
 import axios from 'axios';
+import Moment from 'moment';
+import React, { useContext, useState } from 'react';
+import {
+  FlatList, Image,
+
+
+
+
+  ScrollView, StyleSheet,
+  Text,
+
+
+  TouchableOpacity, View
+} from 'react-native';
+import {
+  AdMobInterstitial,
+
+  AdMobRewarded
+} from 'react-native-admob';
+import { Notifier, NotifierComponents } from 'react-native-notifier';
+//export default class Craigslist extends Component {
+import { ConfirmDialog } from 'react-native-simple-dialogs';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { URLS_QUESTION } from '../apiurls/Urls';
+import { GlobalContext } from '../context/GlobalState';
 export default function MessageResponse({route, navigation}) {
   Moment.locale();
 
@@ -37,21 +41,48 @@ export default function MessageResponse({route, navigation}) {
 
   const images =[
     require('../assets/1x/avatar_1.png'),
-    require('../assets/1x/avatar_2.png'),
+    require('../assets/1x/avatar_4.png'),
     require('../assets/1x/avatar_3.png'),
     require('../assets/1x/avatar_4.png'),
     require('../assets/1x/avatar_5.png'),
     require('../assets/1x/avatar_1.png'),
   ]
   const name =[
-    'Anonymus Ghost',
-    'The Devils Hand',
-    'Scary Pumpkin',
-    'The Witch',
-    'Evil Bat',
-    'Anonymus Ghost',
+    'Anonymous Ghost',
+    'Anonymous Witch',
+    'Anonymous  Pumpkin',
+    'Anonymous Wiltch',
+    'Anonymous Bat',
+    'Anonymous Ghost',
 
 ,  ]
+React.useEffect(() => {
+  
+
+    AdMobInterstitial.setAdUnitID('ca-app-pub-8661978230190789/4280363153');
+
+    AdMobInterstitial.addEventListener('adLoaded', () =>
+      console.log('AdMobInterstitial adLoaded'),
+    );
+    AdMobInterstitial.addEventListener('adFailedToLoad', error =>
+      console.warn(error),
+    );
+    AdMobInterstitial.addEventListener('adOpened', () =>
+      console.log('AdMobInterstitial => adOpened'),
+    );
+    AdMobInterstitial.addEventListener('adClosed', () => {
+      console.log('AdMobInterstitial => adClosed');
+      AdMobInterstitial.requestAd().catch(error => console.log(error));
+    });
+    AdMobInterstitial.addEventListener('adLeftApplication', () =>
+      console.log('AdMobInterstitial => adLeftApplication'),
+    );
+
+    AdMobInterstitial.requestAd().catch(error => console.log(error));
+}, []);
+
+
+
   const listEmptyComponent = () => {
     return (
       <View  style={{padding: 10}}>
@@ -90,7 +121,7 @@ export default function MessageResponse({route, navigation}) {
 
           Notifier.showNotification({
             title: 'DONE',
-            description: 'Question deleted Sucessffully',
+            description: 'Petti deleted successfully',
             Component: NotifierComponents.Alert,
             duration: 6000,
             componentProps: {
@@ -98,6 +129,7 @@ export default function MessageResponse({route, navigation}) {
               backgroundColor: '#26a69a',
             },
           });
+          AdMobInterstitial.showAd().catch(error => console.warn(error));
         },
         (error) => {
           console.log(error);
@@ -109,8 +141,8 @@ export default function MessageResponse({route, navigation}) {
   return (
     <View style={styles.container}>
       <ConfirmDialog
-        title="Delete Message"
-        message="Are you sure you want to delete this message?"
+        title="Petti Delete"
+        message="Are you sure, you want to delete this petti ?"
         visible={dialogVisible}
         onTouchOutside={() => setDialogVisible(false)}
         positiveButton={{

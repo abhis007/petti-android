@@ -32,8 +32,8 @@ export const GlobalProvider = ({children}) => {
 
   access_token:fbToken
  }
- console.log('toke',postData)
- alert(URLS_AUTH.login)
+
+ 
     await fetch(URLS_AUTH.login , {
       method: 'POST',
       headers: {
@@ -44,7 +44,7 @@ export const GlobalProvider = ({children}) => {
     })
       .then((resp) => resp.json())
       .then(async function (data) {
-        console.log(data)
+        
         await AsyncStorage.setItem('authToken', data.token);
         await AsyncStorage.setItem('refreshToken', data.token);
         await AsyncStorage.setItem('fbToken', fbToken);

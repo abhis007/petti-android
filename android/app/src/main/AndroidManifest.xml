@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.lost">
+  package="com.petti">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -25,6 +25,10 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8661978230190789~2977931913"/>
      
     </application>
 

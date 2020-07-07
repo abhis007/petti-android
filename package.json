@@ -1,5 +1,5 @@
 {
-  "name": "lost",
+  "name": "petti",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -22,6 +22,7 @@
     "native-base": "^2.13.12",
     "react": "16.11.0",
     "react-native": "0.62.2",
+    "react-native-admob": "^2.0.0-beta.6",
     "react-native-fbsdk": "^2.0.0",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-loading-spinner-overlay": "^1.1.0",

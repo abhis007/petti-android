@@ -7,7 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'react-native'
 import MessageResponse from './screens/MessageResponse';
 import CreateQuestion from './screens/CreateQuestion';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 const Stack = createStackNavigator();
@@ -47,8 +47,14 @@ const HomeStackScreens = () => {
       name="Home"
       component={PettiHome}
        captions='Petti'
+       
       options={{
         title: 'Petti' ,
+        headerTitleStyle: { 
+        
+        fontWeight: 'bold',
+         
+    },
         // headerRight: () => (
         //   <Button
         //     bordered
@@ -63,18 +69,10 @@ const HomeStackScreens = () => {
         //   </Button>
           
           
-        // ), headerLeft: () => (
-        //   <Button
-        //     bordered
-        //     rounded
-        //     small
-           
-        //     style={{marginRight: 10}}
-        //     onPress={() => {
-        //     console.log(authState);
-        //     }}>
-        //     <Text>ST</Text>
-        //   </Button>
+        // // ), 
+        // headerLeft: () => (
+      
+        //       />
           
           
         // ),
